@@ -32,6 +32,7 @@ class BlogsController < ApplicationController
   end
 
   def update
+    return redirect_to blog_url(@blog) if current_user.premium == false
     if @blog.update(blog_params)
       redirect_to blog_url(@blog), notice: 'Blog was successfully updated.'
     else
