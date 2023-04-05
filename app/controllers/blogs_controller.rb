@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BlogsController < ApplicationController
-  skip_before_action :authenticate_user!, only:  %i[index show]
+  skip_before_action :authenticate_user!, only: %i[index show]
 
   before_action :set_blog, only: %i[edit update destroy]
 
@@ -11,7 +11,7 @@ class BlogsController < ApplicationController
 
   def show
     @blog = Blog.find(params[:id])
-    raise ActiveRecord::RecordNotFound if @blog.secret && current_user == nil
+    raise ActiveRecord::RecordNotFound if @blog.secret && current_user.nil?
     raise ActiveRecord::RecordNotFound if @blog.secret && current_user.id != @blog.user_id
   end
 
@@ -33,6 +33,7 @@ class BlogsController < ApplicationController
 
   def update
     return redirect_to blog_url(@blog) if current_user.premium == false
+
     if @blog.update(blog_params)
       redirect_to blog_url(@blog), notice: 'Blog was successfully updated.'
     else
