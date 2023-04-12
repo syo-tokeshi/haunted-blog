@@ -32,8 +32,6 @@ class BlogsController < ApplicationController
   end
 
   def update
-    return redirect_to blog_url(@blog) if current_user.premium == false
-
     if @blog.update(blog_params)
       redirect_to blog_url(@blog), notice: 'Blog was successfully updated.'
     else
@@ -54,6 +52,7 @@ class BlogsController < ApplicationController
   end
 
   def blog_params
-    params.require(:blog).permit(:title, :content, :secret, :random_eyecatch)
+    attributes = current_user.premium? ? %i[title content secret random_eyecatch] : %i[title content secret]
+    params.require(:blog).permit(attributes)
   end
 end
