@@ -13,7 +13,7 @@
       </div>
     <% end %>
     <div class="blog-content">
-      <%= format_content(blog) %>
+      <%= format_content(blog.content) %>
     </div>
     <% if user_signed_in? && !blog.secret? %>
       <% liking_users_path = api_blog_liking_users_path(blog, format: :json) %>
