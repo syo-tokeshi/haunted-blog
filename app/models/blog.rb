@@ -9,7 +9,7 @@ class Blog < ApplicationRecord
 
   scope :published, -> { where('secret = FALSE') }
 
-  scope :written_by_current_user, ->(current_user) { where(user: current_user) }
+  scope :written_by_current_user, ->(user) { where(user: user) }
 
   scope :search, lambda { |term|
     where('title LIKE ? OR content LIKE ?', "%#{term}%", "%#{term}%")
