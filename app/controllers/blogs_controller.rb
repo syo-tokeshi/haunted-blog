@@ -10,7 +10,7 @@ class BlogsController < ApplicationController
   end
 
   def show
-    @blog = Blog.where(user: current_user).or(Blog.published).find(params[:id])
+    @blog = Blog.owned_by_or_published(current_user).find(params[:id])
   end
 
   def new
